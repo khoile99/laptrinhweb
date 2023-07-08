@@ -3,10 +3,10 @@
 namespace Api;
 
 require_once "api/handler/api_response.php";
-require_once "api/handler/login.php";
+require_once "api/handler/auth.php";
 
 use Api\Handler\APIResponse;
-use Api\Handler\Login;
+use Api\Handler\Auth;
 
 class Router
 {
@@ -23,7 +23,7 @@ class Router
     {
         switch ([$this->requestMethod,$this->uri]) {
             case ['POST','/login']:
-                Login::login();
+                Auth::login();
                 break;
             default:
                 echo APIResponse::notFoundResponse();

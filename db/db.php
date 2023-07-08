@@ -1,6 +1,9 @@
 <?php
 
-namespace db;
+namespace Db;
+
+require_once "config/config.php";
+use config\Config;
 
 class DatabaseConnector
 {
@@ -8,12 +11,12 @@ class DatabaseConnector
 
     public function __construct()
     {
-        $configs = include('config/config.php');
-        $host = $configs["DB_HOST"];
-        $port = $configs["DB_PORT"];
-        $db   = $configs["DB_DATABASE"];
-        $user = $configs["DB_USERNAME"];
-        $pass = $configs["DB_PASSWORD"];
+        $config = new Config();
+        $host = $config->DB_HOST;
+        $port = $config->DB_PORT;
+        $db   = $config->DB_DATABASE;
+        $user = $config->DB_USERNAME;
+        $pass = $config->DB_PASSWORD;
 
         try {
             $this->dbConnection = new \PDO(
