@@ -7,20 +7,29 @@ class APIResponse
     public static function processResponseCommon($statusCode, $body)
     {
         switch ($statusCode) {
-            case 422:
-                return self::unprocessableEntityResponse($body);
-                break;
-            case 404:
-                return self::notFoundResponse($body);
-                break;
             case 200:
                 return self::successResponse($body);
                 break;
             case 400:
                 return self::badRequest($body);
                 break;
+            case 401:
+                return self::unauthorized($body);
+                break;
+            case 404:
+                return self::notFoundResponse($body);
+                break;
+            case 409:
+                return self::existed($body);
+                break;
+            case 422:
+                return self::unprocessableEntityResponse($body);
+                break;
+            case 201:
+                return self::created($body);
+                break;
             default:
-                header($statusCode);
+                header("HTTP/1.1 $statusCode");
                 return json_encode($body);
         }
     }
@@ -50,6 +59,27 @@ class APIResponse
     {
         header('HTTP/1.1 400 Bad Request');
         if (!$body) $body = ['message' => 'Bad Request'];
+        return json_encode($body);
+    }
+
+    public static function unauthorized($body = null)
+    {
+        header('HTTP/1.1 401 Unauthorized');
+        if (!$body) $body = ['message' => 'Unauthorized'];
+        return json_encode($body);
+    }
+
+    public static function existed($body = null)
+    {
+        header('HTTP/1.1 409 Conflict');
+        if (!$body) $body = ['message' => 'Conflict'];
+        return json_encode($body);
+    }
+
+    public static function created($body = null)
+    {
+        header('HTTP/1.1 201 Created');
+        if (!$body) $body = ['message' => 'Created'];
         return json_encode($body);
     }
 }

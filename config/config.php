@@ -17,6 +17,7 @@ class Config {
     public $DB_USERNAME;
     public $DB_PASSWORD;
     public $BASE_URL;
+    public $SECRET_KEY;
     function __construct()
     {
         $this->DB_HOST = getenv('DB_HOST');
@@ -25,5 +26,6 @@ class Config {
         $this->DB_USERNAME = getenv('DB_USERNAME');
         $this->DB_PASSWORD = getenv('DB_PASSWORD');
         $this->BASE_URL = getenv("BASE_URL");
+        $this->SECRET_KEY = getenv("SECRET_KEY");
     }
 }

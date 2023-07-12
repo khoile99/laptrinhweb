@@ -3,22 +3,39 @@
 namespace UseCase;
 
 require_once "pkg/hash.php";
+require_once "pkg/jwt.php";
 require_once "db/repository/shop_user.php";
 
+use Api\Handler\APIResponse;
+use DateTime;
 use Pkg\Hash;
 use Db\repository\ShopUser;
+use Pkg\JwtHelper;
 
 class Auth
 {
     public static function login($userName, $password)
     {
         global $dbConnection;
-        $pwd = ShopUser::getPasswordByUserName($userName);
-        if (!$pwd) {
+        $record = ShopUser::getIdPasswordByUserName($userName);
+        if (!$record) {
             return [400, array("message" => "user not existed")];
         }
-        $isVerified = Hash::verify_hash($password, $pwd);
+        $isVerified = Hash::verifyHash($password, $record->password);
         if (!$isVerified) return [400, array("message" => "Passwrong is wrong")];
-        return [200, array("message" => "Login successfully")];
+        $issuedAt = new DateTime();
+        $expire = $issuedAt->modify('+1 day')->getTimestamp();
+        $data = JwtHelper::encode(array("id" => $record->id, 'exp' => $expire));
+        return [200, array("token" => $data)];
+    }
+
+    public static function register($userName, $password)
+    {
+        $record = ShopUser::getIdPasswordByUserName($userName);
+        if ($record) return [409, array("message" => "user already existed")];
+        $hashPwd = Hash::getHash($password);
+        $userId = ShopUser::insert($userName, $hashPwd);
+        if ($userId) return [201, array("message" => "User is Created")];
+        return [500, 'Server error'];
     }
 }
