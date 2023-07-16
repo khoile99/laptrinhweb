@@ -1,4 +1,5 @@
 <?php
+error_reporting(0); // disable errors
 
 require_once "api/router.php";
 

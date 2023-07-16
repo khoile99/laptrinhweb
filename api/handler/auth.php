@@ -17,7 +17,8 @@ class Auth
     public static function login()
     {
         $formKeys = ["userName", "password"];
-        Validate::checkKeysExists($formKeys);
+        Validate::validateBody($formKeys, null);
+
         $userName = $_POST["userName"];
         $password = $_POST["password"];
         [$statusCode, $body] = AuthUseCase::login($userName, $password);
@@ -27,7 +28,8 @@ class Auth
     public static function register()
     {
         $formKeys = ["userName", "password", "address", "phoneNumber", "email", "birthday"];
-        Validate::checkKeysExists($formKeys);
+        $patterns = ["email" => "", "phoneNumber" => "/\d{10}$/", "birthday" => ""];
+        Validate::validateBody($formKeys, $patterns);
 
         $userName = $_POST["userName"];
         $password = $_POST["password"];
