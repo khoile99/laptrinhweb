@@ -4,9 +4,11 @@ namespace Api;
 
 require_once "api/handler/api_response.php";
 require_once "api/handler/auth.php";
+require_once "api/handler/user.php";
 
 use Api\Handler\APIResponse;
 use Api\Handler\Auth;
+use Api\Handler\User;
 
 class Router
 {
@@ -34,6 +36,9 @@ class Router
                 break;
             case ['POST', '/register']:
                 Auth::register();
+                break;
+            case ['POST', '/edit']:
+                User::edit($this->userId);
                 break;
             case ['GET', '/getID']:
                 Auth::getID($this->userId);

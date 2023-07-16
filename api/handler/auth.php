@@ -28,7 +28,7 @@ class Auth
     public static function register()
     {
         $formKeys = ["userName", "password", "address", "phoneNumber", "email", "birthday"];
-        $patterns = ["email" => "", "phoneNumber" => "/\d{10}$/", "birthday" => ""];
+        $patterns = ["userName" => "/\S+/", "password" => "/\S+/", "address" => "/\S+/", "phoneNumber" => "/^\d{10}$/", "email" => "", "birthday" => ""];
         Validate::validateBody($formKeys, $patterns);
 
         $userName = $_POST["userName"];
