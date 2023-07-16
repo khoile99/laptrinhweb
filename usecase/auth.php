@@ -29,12 +29,14 @@ class Auth
         return [200, array("token" => $data)];
     }
 
-    public static function register($userName, $password)
+    public static function register($userName, $password, $address, $phoneNumber, $email, $birthday)
     {
         $record = ShopUser::getIdPasswordByUserName($userName);
         if ($record) return [409, array("message" => "user already existed")];
+        $record = ShopUser::isEmailExist($email);
+        if ($record) return [409, array("message" => "email already existed")];
         $hashPwd = Hash::getHash($password);
-        $userId = ShopUser::insert($userName, $hashPwd);
+        $userId = ShopUser::insert($userName, $hashPwd, $address, $phoneNumber, $email, $birthday);
         if ($userId) return [201, array("message" => "User is Created")];
         return [500, 'Server error'];
     }

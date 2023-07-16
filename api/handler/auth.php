@@ -3,9 +3,11 @@
 namespace Api\Handler;
 
 require_once "api/handler/api_response.php";
+require_once "api/handler/validate.php";
 require_once "usecase/auth.php";
 
 use Api\Handler\APIResponse;
+use Api\Handler\Validate;
 use Pkg\JwtHelper;
 use UseCase\Auth as AuthUseCase;
 
@@ -14,7 +16,8 @@ class Auth
 {
     public static function login()
     {
-        global $dbConnection;
+        $formKeys = ["userName", "password"];
+        Validate::checkKeysExists($formKeys);
         $userName = $_POST["userName"];
         $password = $_POST["password"];
         [$statusCode, $body] = AuthUseCase::login($userName, $password);
@@ -23,10 +26,16 @@ class Auth
 
     public static function register()
     {
-        global $dbConnection;
+        $formKeys = ["userName", "password", "address", "phoneNumber", "email", "birthday"];
+        Validate::checkKeysExists($formKeys);
+
         $userName = $_POST["userName"];
         $password = $_POST["password"];
-        [$statusCode, $body] = AuthUseCase::register($userName, $password);
+        $address = $_POST["address"];
+        $phoneNumber = $_POST["phoneNumber"];
+        $email = $_POST["email"];
+        $birthday = $_POST["birthday"];
+        [$statusCode, $body] = AuthUseCase::register($userName, $password, $address, $phoneNumber, $email, $birthday);
         echo APIResponse::processResponseCommon($statusCode, $body);
     }
 
