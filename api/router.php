@@ -26,7 +26,7 @@ class Router
         $notNeedToken = [['POST', '/login'], ['POST', '/register']];
 
         if (!in_array([$this->requestMethod, $this->uri], $notNeedToken)) {
-            !$this->checkJWT();
+            $this->checkJWT();
         }
         switch ([$this->requestMethod, $this->uri]) {
             case ['POST', '/login']:

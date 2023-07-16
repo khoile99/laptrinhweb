@@ -11,7 +11,7 @@ class ShopUser
     public static function getIdPasswordByUserName($userName)
     {
         global $dbConnection;
-        $dql = "SELECT id, password FROM shop_user WHERE username='" . $userName . "'";
+        $dql = "SELECT id, password FROM shop.users WHERE user_name='" . $userName . "'";
         $record = $dbConnection->query($dql)->fetchObject();
         if (!$record) {
             return '';
@@ -23,7 +23,7 @@ class ShopUser
     public static function insert($userName, $password)
     {
         global $dbConnection;
-        $sql = "INSERT INTO shop_user (username, password) VALUES ('$userName', '$password') RETURNING id";
+        $sql = "INSERT INTO shop.users (user_name, password) VALUES ('$userName', '$password') RETURNING id";
         try {
             $result = $dbConnection->query($sql)->fetchObject();
             return $result->id;
