@@ -8,6 +8,7 @@ require_once "api/handler/user.php";
 
 use Api\Handler\APIResponse;
 use Api\Handler\Auth;
+use Api\Handler\AuthAdmin;
 use Api\Handler\User;
 
 class Router
@@ -15,6 +16,7 @@ class Router
     private $requestMethod;
     private $uri;
     private $userId;
+    private $adminId;
 
     public function __construct($requestMethod, $uri)
     {
@@ -25,29 +27,55 @@ class Router
     public function processRequest()
     {
         // Middleware
-        $notNeedToken = [['POST', '/login'], ['POST', '/register']];
+        $notNeedToken = [['ADMIN', '/admin/login'], ['POST', '/login'], ['POST', '/register']];
 
         if (!in_array([$this->requestMethod, $this->uri], $notNeedToken)) {
             $this->checkJWT();
         }
-        $this->checkBlocked();
 
-        switch ([$this->requestMethod, $this->uri]) {
-            case ['POST', '/login']:
-                Auth::login();
-                break;
-            case ['POST', '/register']:
-                Auth::register();
-                break;
-            case ['POST', '/edit']:
-                User::edit($this->userId);
-                break;
-            case ['GET', '/getID']:
-                Auth::getID($this->userId);
-                break;
-            default:
-                echo APIResponse::notFoundResponse();
-                break;
+        $uriList = explode('/', $this->uri);
+        if ($uriList[1] == 'admin') {
+            if (!in_array([$this->requestMethod, $this->uri], $notNeedToken) && !$this->adminId) {
+                echo APIResponse::unauthorized('Token is wrong');
+                exit;
+            }
+
+            switch ([$this->requestMethod, $this->uri]) {
+                case ['POST', '/admin/login']:
+                    Auth::loginAdmin();
+                    break;
+                case ['GET', '/admin/getID']:
+                    Auth::getID($this->adminId);
+                    break;
+                default:
+                    echo APIResponse::notFoundResponse();
+                    break;
+            }
+        } else {
+            if (!in_array([$this->requestMethod, $this->uri], $notNeedToken) && !$this->userId) {
+                echo APIResponse::unauthorized('Token is wrong');
+                exit;
+            }
+
+            $this->checkBlocked();
+
+            switch ([$this->requestMethod, $this->uri]) {
+                case ['POST', '/login']:
+                    Auth::login();
+                    break;
+                case ['POST', '/register']:
+                    Auth::register();
+                    break;
+                case ['POST', '/edit']:
+                    User::edit($this->userId);
+                    break;
+                case ['GET', '/getID']:
+                    Auth::getID($this->userId);
+                    break;
+                default:
+                    echo APIResponse::notFoundResponse();
+                    break;
+            }
         }
     }
 
@@ -61,7 +89,7 @@ class Router
             echo APIResponse::unauthorized('Token not found in request');
             exit;
         }
-        $this->userId = Auth::getUserIdByToken($matches[1]);
+        [$this->userId, $this->adminId] = Auth::getUserIdByToken($matches[1]);
     }
 
     private function checkBlocked()

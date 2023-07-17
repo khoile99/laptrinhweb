@@ -25,6 +25,17 @@ class Auth
         echo APIResponse::processResponseCommon($statusCode, $body);
     }
 
+    public static function loginAdmin()
+    {
+        $formKeys = ["userName", "password"];
+        Validate::validateBody($formKeys, null);
+
+        $userName = $_POST["userName"];
+        $password = $_POST["password"];
+        [$statusCode, $body] = AuthUseCase::loginAdmin($userName, $password);
+        echo APIResponse::processResponseCommon($statusCode, $body);
+    }
+
     public static function register()
     {
         $formKeys = ["userName", "password", "address", "phoneNumber", "email", "birthday"];
@@ -48,9 +59,13 @@ class Auth
             echo APIResponse::unauthorized('Token is wrong');
             exit;
         }
-        $userId = $token_decode->id;
+        $userId = null;
+        $adminId = null;
 
-        return $userId;
+        if (property_exists( $token_decode,'isAdmin')) $adminId = $token_decode->id;
+        else $userId = $token_decode->id;
+
+        return [$userId, $adminId];
     }
 
     public static function getID($userId)
