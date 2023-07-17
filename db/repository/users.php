@@ -79,4 +79,18 @@ class Users
         }
         return null;
     }
+
+    public static function getIsBlockedByID($id){
+        global $dbConnection;
+        $dql = "SELECT is_blocked FROM shop.users WHERE id='" . $id . "'";
+        $record = $dbConnection->query($dql)->fetchObject();
+        return $record;
+    }
+
+    public static function getIsBlockedByUsername($userName){
+        global $dbConnection;
+        $dql = "SELECT is_blocked FROM shop.users WHERE user_name='" . $userName . "'";
+        $record = $dbConnection->query($dql)->fetchObject();
+        return $record;
+    }
 }

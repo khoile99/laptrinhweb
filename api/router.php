@@ -30,6 +30,8 @@ class Router
         if (!in_array([$this->requestMethod, $this->uri], $notNeedToken)) {
             $this->checkJWT();
         }
+        $this->checkBlocked();
+
         switch ([$this->requestMethod, $this->uri]) {
             case ['POST', '/login']:
                 Auth::login();
@@ -51,8 +53,7 @@ class Router
 
     private function checkJWT()
     {
-        if (!array_key_exists('HTTP_AUTHORIZATION', $_SERVER))
-        {
+        if (!array_key_exists('HTTP_AUTHORIZATION', $_SERVER)) {
             echo APIResponse::unauthorized();
             exit;
         }
@@ -61,5 +62,10 @@ class Router
             exit;
         }
         $this->userId = Auth::getUserIdByToken($matches[1]);
+    }
+
+    private function checkBlocked()
+    {
+        Auth::checkBlocked($this->userId);
     }
 }

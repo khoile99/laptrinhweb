@@ -57,4 +57,14 @@ class Auth
     {
         echo APIResponse::successResponse($userId);
     }
+
+    public static function checkBlocked($userId)
+    {
+        $userName = null;
+        if (array_key_exists('userName', $_POST)) $userName = $_POST['userName'];
+        if (AuthUseCase::isBocked($userId, $userName)) {
+            echo APIResponse::forbidden();
+            exit;
+        }
+    }
 }

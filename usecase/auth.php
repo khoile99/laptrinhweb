@@ -39,4 +39,21 @@ class Auth
         if ($userId) return [201, array("message" => "User is Created")];
         return [500, 'Server error'];
     }
+
+    public static function isBocked($userID, $userName)
+    {
+        if ($userID || $userName) {
+            if ($userID) {
+                $record = Users::getIsBlockedByID($userID);
+                if (!$record) return true;
+                return $record->is_blocked;
+            }
+            if ($userName) {
+                $record = Users::getIsBlockedByUsername($userName);
+                if (!$record) return false;
+                return $record->is_blocked;
+            }
+        }
+        return false;
+    }
 }

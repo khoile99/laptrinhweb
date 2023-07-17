@@ -82,4 +82,11 @@ class APIResponse
         if (!$body) $body = ['message' => 'Created'];
         return json_encode($body);
     }
+
+    public static function forbidden($body = null)
+    {
+        header('HTTP/1.1 403 Forbidden');
+        if (!$body) $body = ['message' => 'Forbidden'];
+        return json_encode($body);
+    }
 }
