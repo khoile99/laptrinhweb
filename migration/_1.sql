@@ -12,6 +12,14 @@ CREATE TABLE IF NOT EXISTS shop.users (
     is_blocked BOOLEAN DEFAULT FALSE
 );
 
+CREATE TABLE IF NOT EXISTS shop.products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    price INTEGER,
+    description TEXT,
+    img TEXT
+);
+
 INSERT INTO shop.users (user_name, password, address, phone_number, email, birthday)
 VALUES ('lekhoi', '$09$ugFZmLNF89rFqaf2VLshyOEUm9rN8WOQsBt3BFs8mYoJMQ8lFuxAu', '350A To Hien Thanh', '0838571677', 'khoi.le99@hcmut.edu.vn','1999-12-28');
 
