@@ -17,4 +17,12 @@ class Products
 
         return $records;
     }
+
+    public static function get_product($id)
+    {
+        global $dbConnection;
+        $dql = "SELECT id,name,description,brand,color,material,size,array_to_json(img) AS img FROM shop.products WHERE id=$id";
+        $product = $dbConnection->query($dql)->fetchObject();
+        return $product;
+    }
 }

@@ -32,6 +32,11 @@ class Router
         $uriList = explode('/', $this->uri);
 
         if ($uriList[1] == 'public') {
+            if ($uriList[2] == 'get_product' && $this->requestMethod == "GET") {
+                Common::get_product();
+                return;
+            }
+
             switch ([$this->requestMethod, $this->uri]) {
                 case ['GET', '/public/list_products']:
                     Common::list_products();

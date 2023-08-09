@@ -16,4 +16,12 @@ class Common
         [$code, $records] = CommonUseCase::list_products();
         echo APIResponse::processResponseCommon($code, $records);
     }
+
+    public static function get_product()
+    {
+        $uriList = explode('/', $_SERVER['REQUEST_URI']);
+        $id = $uriList[count($uriList) - 1];
+        [$code, $product] = CommonUseCase::get_product($id);
+        echo APIResponse::processResponseCommon($code, $product);
+    }
 }
