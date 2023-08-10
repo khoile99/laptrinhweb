@@ -23,4 +23,10 @@ class User
         if ($userId) return [200, array("message" => "User is updated")];
         return [500, 'Server error'];
     }
+
+    public static function getUser($userId)
+    {
+        $user = Users::getUserById($userId);
+        return [200, $user];
+    }
 }

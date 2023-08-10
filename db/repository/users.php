@@ -80,16 +80,26 @@ class Users
         return null;
     }
 
-    public static function getIsBlockedByID($id){
+    public static function getIsBlockedByID($id)
+    {
         global $dbConnection;
         $dql = "SELECT is_blocked FROM shop.users WHERE id='" . $id . "'";
         $record = $dbConnection->query($dql)->fetchObject();
         return $record;
     }
 
-    public static function getIsBlockedByUsername($userName){
+    public static function getIsBlockedByUsername($userName)
+    {
         global $dbConnection;
         $dql = "SELECT is_blocked FROM shop.users WHERE user_name='" . $userName . "'";
+        $record = $dbConnection->query($dql)->fetchObject();
+        return $record;
+    }
+
+    public static function getUserById($id)
+    {
+        global $dbConnection;
+        $dql = "SELECT user_name, address, phone_number,email,birthday,user_type,is_blocked FROM shop.users WHERE id='$id'";
         $record = $dbConnection->query($dql)->fetchObject();
         return $record;
     }

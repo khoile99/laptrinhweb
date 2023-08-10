@@ -86,6 +86,9 @@ class Router
                     case ['POST', '/edit']:
                         User::edit($this->userId);
                         break;
+                    case ['GET', '/get_user']:
+                        User::getUser($this->userId);
+                        break;
                     case ['GET', '/getID']:
                         Auth::getID($this->userId);
                         break;

@@ -15,4 +15,5 @@ $uri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 // pass the request method url to Router and process the HTTP request:
 $controller = new Router($requestMethod, $uri);
-$controller->processRequest();
+if ($requestMethod != "OPTIONS")
+    $controller->processRequest();

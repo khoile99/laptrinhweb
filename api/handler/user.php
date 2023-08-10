@@ -32,4 +32,10 @@ class User
         [$statusCode, $body] = UserUseCase::edit($userId, $password, $address, $phoneNumber, $email, $birthday);
         echo APIResponse::processResponseCommon($statusCode, $body);
     }
+
+    public static function getUser($userId)
+    {
+        [$statusCode, $body] = UserUseCase::getUser($userId);
+        echo APIResponse::processResponseCommon($statusCode, $body);
+    }
 }
