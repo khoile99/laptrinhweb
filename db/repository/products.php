@@ -9,7 +9,7 @@ class Products
     public static function list_products()
     {
         global $dbConnection;
-        $dql = "SELECT id, name, description, brand, color, material, size FROM shop.products ORDER BY name ASC";
+        $dql = "SELECT id, name,price, description, brand, color, material, size,array_to_json(img) as img FROM shop.products ORDER BY name ASC";
         $records = $dbConnection->query($dql)->fetchAll(\PDO::FETCH_OBJ);
         if (!$records) {
             return null;

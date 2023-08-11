@@ -13,7 +13,15 @@ class Common
     public static function list_products()
     {
         $records = Products::list_products();
-        return [200, $records];
+        $products = json_decode(json_encode($records), true);
+        for ($i = 0; $i < count($products); $i++) {
+            $img = json_decode($products[$i]['img'])[0];
+            $fileName = getcwd() . "/assets/$img";
+            $imgData = base64_encode(file_get_contents($fileName));
+            $src = 'data: ' . mime_content_type($fileName) . ';base64,' . $imgData;
+            $products[$i]['img'] = [$src];
+        }
+        return [200, $products];
     }
 
     public static function get_product($id)
