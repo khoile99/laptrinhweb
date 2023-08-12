@@ -3,10 +3,12 @@
 namespace UseCase;
 
 use Db\repository\Products;
+use Db\repository\Comments;
 
 use function PHPSTORM_META\type;
 
 require_once "db/repository/products.php";
+require_once "db/repository/comments.php";
 
 class Common
 {
@@ -41,5 +43,11 @@ class Common
         }
         $product->img = $imgsTmp;
         return [200, $product];
+    }
+
+    public static function get_comment($id)
+    {
+        $comments = Comments::getCommentsByProductId($id);
+        return [200, $comments];
     }
 }

@@ -32,3 +32,11 @@ CREATE TABLE IF NOT EXISTS shop.admins (
 
 INSERT INTO shop.admins (user_name, password, email)
 VALUES ('lekhoi', '$2y$09$9lY7KhuKzXgNSRsgYszBdecJbAMLEDCS7kzWApWaf6ldwdeq1pZ/O', 'khoi.le99@hcmut.edu.vn');
+
+CREATE TABLE IF NOT EXISTS shop.comments (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    product_id INT REFERENCES products(id),
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

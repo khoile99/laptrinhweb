@@ -24,4 +24,12 @@ class Common
         [$code, $product] = CommonUseCase::get_product($id);
         echo APIResponse::processResponseCommon($code, $product);
     }
+
+    public static function get_comment()
+    {
+        $uriList = explode('/', $_SERVER['REQUEST_URI']);
+        $id = $uriList[count($uriList) - 1];
+        [$code, $comments] = CommonUseCase::get_comment($id);
+        echo APIResponse::processResponseCommon($code, $comments);
+    }
 }

@@ -36,6 +36,11 @@ class Router
                 Common::get_product();
                 return;
             }
+            if ($uriList[2] == 'get_comment' && $this->requestMethod == "GET") {
+                Common::get_comment();
+                return;
+            }
+
 
             switch ([$this->requestMethod, $this->uri]) {
                 case ['GET', '/public/list_products']:
