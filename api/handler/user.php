@@ -38,4 +38,12 @@ class User
         [$statusCode, $body] = UserUseCase::getUser($userId);
         echo APIResponse::processResponseCommon($statusCode, $body);
     }
+
+    public static function sendComment($userId)
+    {
+        $comment = $_POST["comment"];
+        $productId = $_POST["productId"];
+        [$statusCode, $body] = UserUseCase::addComment($userId, $productId, $comment);
+        echo APIResponse::processResponseCommon($statusCode, $body);
+    }
 }

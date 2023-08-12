@@ -5,9 +5,11 @@ namespace UseCase;
 require_once "pkg/hash.php";
 require_once "pkg/jwt.php";
 require_once "db/repository/users.php";
+require_once "db/repository/comments.php";
 
 use Pkg\Hash;
 use Db\repository\Users;
+use Db\repository\Comments;
 
 class User
 {
@@ -28,5 +30,13 @@ class User
     {
         $user = Users::getUserById($userId);
         return [200, $user];
+    }
+
+    public static function addComment($userId, $productId, $comment)
+    {
+        $records = Comments::addComment($userId, $productId, $comment);
+        $user = Users::getUsernameById($userId);
+        $body = array('user_name' => $user, 'created_at' => $records[0]->created_at, 'id' => $records[0]->id, 'comment' => $comment);
+        return [200, $body];
     }
 }

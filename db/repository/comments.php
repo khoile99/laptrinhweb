@@ -19,4 +19,16 @@ class Comments
 
         return $records;
     }
+
+    public static function addComment($userId, $productId, $comment)
+    {
+        global $dbConnection;
+        $dql = "INSERT INTO shop.comments (user_id, product_id, comment) VALUES ($userId, $productId, '$comment') RETURNING id,created_at";
+        $records = $dbConnection->query($dql)->fetchAll(\PDO::FETCH_OBJ);
+        if (!$records) {
+            return null;
+        }
+
+        return $records;
+    }
 }

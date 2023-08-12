@@ -97,6 +97,9 @@ class Router
                     case ['GET', '/getID']:
                         Auth::getID($this->userId);
                         break;
+                    case ['POST', '/send_comment']:
+                        User::sendComment($this->userId);
+                        break;
                     default:
                         echo APIResponse::notFoundResponse();
                         break;

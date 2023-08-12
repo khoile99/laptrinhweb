@@ -103,4 +103,12 @@ class Users
         $record = $dbConnection->query($dql)->fetchObject();
         return $record;
     }
+
+    public static function getUsernameById($id)
+    {
+        global $dbConnection;
+        $dql = "SELECT user_name FROM shop.users WHERE id='$id'";
+        $record = $dbConnection->query($dql)->fetchObject();
+        return $record->user_name;
+    }
 }
