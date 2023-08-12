@@ -40,6 +40,15 @@ class Router
                 Common::get_comment();
                 return;
             }
+            if ($uriList[2] == 'get_qa' && $this->requestMethod == "GET") {
+                Common::get_qa();
+                return;
+            }
+
+            if ($uriList[2] == 'get_information' && $this->requestMethod == "GET") {
+                Common::get_information();
+                return;
+            }
 
 
             switch ([$this->requestMethod, $this->uri]) {

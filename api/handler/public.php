@@ -32,4 +32,16 @@ class Common
         [$code, $comments] = CommonUseCase::get_comment($id);
         echo APIResponse::processResponseCommon($code, $comments);
     }
+
+    public static function get_qa()
+    {
+        [$code, $qas] = CommonUseCase::get_qa();
+        echo APIResponse::processResponseCommon($code, $qas);
+    }
+
+    public static function get_information()
+    {
+        [$code, $info] = CommonUseCase::get_information();
+        echo APIResponse::processResponseCommon($code, $info);
+    }
 }

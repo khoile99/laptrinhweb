@@ -40,3 +40,15 @@ CREATE TABLE IF NOT EXISTS shop.comments (
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS shop.qa (
+    id SERIAL PRIMARY KEY,
+    question TEXT,
+    answer TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS shop.information (
+    key TEXT,
+    value TEXT
+);

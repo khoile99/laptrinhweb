@@ -4,11 +4,15 @@ namespace UseCase;
 
 use Db\repository\Products;
 use Db\repository\Comments;
+use Db\repository\QA;
+use Db\repository\Information;
 
 use function PHPSTORM_META\type;
 
 require_once "db/repository/products.php";
 require_once "db/repository/comments.php";
+require_once "db/repository/qa.php";
+require_once "db/repository/information.php";
 
 class Common
 {
@@ -49,5 +53,17 @@ class Common
     {
         $comments = Comments::getCommentsByProductId($id);
         return [200, $comments];
+    }
+
+    public static function get_qa()
+    {
+        $qas = QA::getQA();
+        return [200, $qas];
+    }
+
+    public static function get_information()
+    {
+        $infos = Information::getAddress();
+        return [200, $infos[0]];
     }
 }
