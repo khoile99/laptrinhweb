@@ -46,4 +46,17 @@ class User
         [$statusCode, $body] = UserUseCase::addComment($userId, $productId, $comment);
         echo APIResponse::processResponseCommon($statusCode, $body);
     }
+
+    public static function getCarts($userId)
+    {
+        [$statusCode, $carts] = UserUseCase::getCarts($userId);
+        echo APIResponse::processResponseCommon($statusCode, $carts);
+    }
+
+    public static function deleteCart($userId)
+    {
+        $id = $_POST["id"];
+        [$statusCode, $msg] = UserUseCase::deleteCart($userId, $id);
+        echo APIResponse::processResponseCommon($statusCode, $msg);
+    }
 }

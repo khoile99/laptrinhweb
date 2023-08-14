@@ -6,10 +6,12 @@ require_once "pkg/hash.php";
 require_once "pkg/jwt.php";
 require_once "db/repository/users.php";
 require_once "db/repository/comments.php";
+require_once "db/repository/orders.php";
 
 use Pkg\Hash;
 use Db\repository\Users;
 use Db\repository\Comments;
+use Db\repository\Orders;
 
 class User
 {
@@ -38,5 +40,31 @@ class User
         $user = Users::getUsernameById($userId);
         $body = array('user_name' => $user, 'created_at' => $records[0]->created_at, 'id' => $records[0]->id, 'comment' => $comment);
         return [200, $body];
+    }
+
+    public static function getCarts($userId)
+    {
+        $records = Orders::listCarts($userId);
+        for ($i = 0; $i < count($records); $i++) {
+
+            $img = $records[$i]->img;
+            $fileName = getcwd() . "/assets/$img";
+
+            // Read image path, convert to base64 encoding
+            $imgData = base64_encode(file_get_contents($fileName));
+
+            // Format the image SRC:  data:{mime};base64,{data};
+            $src = 'data: ' . mime_content_type($fileName) . ';base64,' . $imgData;
+            $records[$i]->img = $src;
+        }
+        return [200, $records];
+    }
+
+    public static function deleteCart($userId, $orderId)
+    {
+        $order = Orders::deleteCartByUserIdOrderId($userId, $orderId);
+        if ($order == null) return [400, array('message' => "Delete unsuccessfully")];
+
+        return [200, array('message' => "Deleted Successfully")];
     }
 }

@@ -52,3 +52,11 @@ CREATE TABLE IF NOT EXISTS shop.information (
     key TEXT,
     value TEXT
 );
+
+CREATE TABLE IF NOT EXISTS shop.orders (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    product_id INT REFERENCES products(id),
+    number INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
