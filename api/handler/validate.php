@@ -48,7 +48,8 @@ class Validate
                     echo APIResponse::badRequest(array("message" => $key . " is wrong"));
                     exit;
                 }
-            } elseif (!preg_match($reg, $_POST[$key])) {
+            } elseif ($reg == "") continue;
+            elseif (!preg_match($reg, $_POST[$key])) {
                 echo APIResponse::badRequest(array("message" => $key . " is wrong"));
                 exit;
             }

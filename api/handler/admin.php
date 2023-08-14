@@ -91,7 +91,7 @@ class Admin
     {
 
         $formKeys = ["id", "name", "price", "description", "brand", "color", "material", "size"];
-        $patterns = ["id" => "/\d+/", "name" => "/\S+/", "price" => "/^-?(?:\d+|\d*\.\d+)$/", "description" => "/\S+/", "brand" => "/\S+/", "color" => "/\S+/", "material" => "/\S+/", "size" => "/\S+/"];
+        $patterns = ["id" => "/\d+/", "name" => "/\S+/", "price" => "/^-?(?:\d+|\d*\.\d+)$/", "description" => "/\S+/", "brand" => "", "color" => "", "material" => "", "size" => ""];
 
         Validate::validateBody($formKeys, $patterns);
 
