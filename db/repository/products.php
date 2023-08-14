@@ -1,7 +1,9 @@
 <?php
 
 namespace Db\repository;
+
 use Exception;
+
 require_once "db/db.php";
 
 class Products
@@ -42,10 +44,10 @@ class Products
             if ($name) $sql = $sql . "name='$name',";
             if ($price) $sql = $sql . "price='$price',";
             if ($description) $sql = $sql . "description='$description',";
-            if ($brand) $sql = $sql . "brand='$brand',";
-            if ($color) $sql = $sql . "color='$color',";
-            if ($material) $sql = $sql . "material='$material',";
-            if ($size) $sql = $sql . "size='$size',";
+            if ($brand != null) $sql = $sql . "brand='$brand',";
+            if ($color != null) $sql = $sql . "color='$color',";
+            if ( $material != null) $sql = $sql . "material='$material',";
+            if ($size != null) $sql = $sql . "size='$size',";
             $sql = substr($sql, 0, strlen($sql) - 1);
             if ($id) $sql = "$sql WHERE id=$id returning *";
             else return null;
