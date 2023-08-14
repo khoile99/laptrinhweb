@@ -35,8 +35,8 @@ VALUES ('lekhoi', '$2y$09$9lY7KhuKzXgNSRsgYszBdecJbAMLEDCS7kzWApWaf6ldwdeq1pZ/O'
 
 CREATE TABLE IF NOT EXISTS shop.comments (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id),
-    product_id INT REFERENCES products(id),
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    product_id INT REFERENCES products(id) ON DELETE CASCADE,
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS shop.information (
 
 CREATE TABLE IF NOT EXISTS shop.orders (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id),
-    product_id INT REFERENCES products(id),
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    product_id INT REFERENCES products(id) ON DELETE CASCADE,
     number INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

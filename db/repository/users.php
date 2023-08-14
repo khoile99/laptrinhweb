@@ -4,6 +4,8 @@ namespace Db\repository;
 
 use Exception;
 
+use function PHPSTORM_META\type;
+
 require_once "db/db.php";
 
 class Users
@@ -110,5 +112,47 @@ class Users
         $dql = "SELECT user_name FROM shop.users WHERE id='$id'";
         $record = $dbConnection->query($dql)->fetchObject();
         return $record->user_name;
+    }
+
+    public static function listUsers()
+    {
+        global $dbConnection;
+        $dql = "SELECT id, user_name, address, phone_number, email, birthday,user_type, is_blocked FROM shop.users";
+        $records = $dbConnection->query($dql)->fetchAll(\PDO::FETCH_OBJ);
+        return $records;
+    }
+
+    public static function deleteUser($id)
+    {
+        global $dbConnection;
+        $dql = "DELETE FROM shop.users WHERE id=$id";
+        $records = $dbConnection->query($dql);
+        return $id;
+    }
+
+    public static function editUserByAdmin($userId, $address, $phoneNumber, $email, $birthday, $isBlocked, $userType)
+    {
+        global $dbConnection;
+        if ($userId || $address || $phoneNumber || $email || $birthday) {
+            $sql = "UPDATE shop.users SET ";
+            if ($address) $sql = $sql . "address='$address',";
+            if ($phoneNumber) $sql = $sql . "phone_number='$phoneNumber',";
+            if ($email) $sql = $sql . "email='$email',";
+            if ($userType) $sql = $sql . "user_type='$userType',";
+            if ($birthday) $sql = $sql . "birthday='$birthday',";
+            if ($isBlocked == 0) $sql = $sql . "is_blocked=false,";
+            else $sql = $sql . "is_blocked=true,";
+            $sql = substr($sql, 0, strlen($sql) - 1);
+            if ($userId) $sql = "$sql WHERE id=$userId returning *";
+            else return null;
+            try {
+                $result = $dbConnection->query($sql)->fetchObject();
+                if ($result) return $result;
+                return null;
+            } catch (Exception $e) {
+                return null;
+            }
+        }
+        return null;
     }
 }

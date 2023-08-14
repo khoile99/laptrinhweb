@@ -16,7 +16,6 @@ class User
     public static function edit($userId)
     {
         $formKeys = ["address", "phoneNumber", "email", "birthday"];
-        $patterns = ["email" => "", "phoneNumber" => "/^\d{10}$/", "birthday" => ""];
         $patterns = ["address" => "/\S+/", "phoneNumber" => "/^\d{10}$/", "email" => "", "birthday" => ""];
 
         Validate::validateBody($formKeys, $patterns);

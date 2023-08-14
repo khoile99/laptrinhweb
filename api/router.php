@@ -6,12 +6,13 @@ require_once "api/handler/api_response.php";
 require_once "api/handler/auth.php";
 require_once "api/handler/user.php";
 require_once "api/handler/public.php";
+require_once "api/handler/admin.php";
 
 use Api\Handler\APIResponse;
 use Api\Handler\Auth;
-use Api\Handler\AuthAdmin;
 use Api\Handler\Common;
 use Api\Handler\User;
+use Api\Handler\Admin;
 
 class Router
 {
@@ -60,7 +61,7 @@ class Router
                     break;
             }
         } else {
-            $notNeedToken = [['ADMIN', '/admin/login'], ['POST', '/login'], ['POST', '/register']];
+            $notNeedToken = [['POST', '/admin/login'], ['POST', '/login'], ['POST', '/register']];
             if (!in_array([$this->requestMethod, $this->uri], $notNeedToken)) {
                 $this->checkJWT();
             }
@@ -71,12 +72,28 @@ class Router
                     exit;
                 }
 
+                if ($uriList[2] == 'get_user' && $this->requestMethod == "GET") {
+                    Admin::getUser();
+                    exit;
+                }
+
+                if ($uriList[2] == 'delete_user' && $this->requestMethod == "DELETE") {
+                    Admin::deleteUser();
+                    exit;
+                }
+
                 switch ([$this->requestMethod, $this->uri]) {
                     case ['POST', '/admin/login']:
                         Auth::loginAdmin();
                         break;
                     case ['GET', '/admin/getID']:
                         Auth::getID($this->adminId);
+                        break;
+                    case ['GET', '/admin/list_user']:
+                        Admin::listUser();
+                        break;
+                    case ['POST', '/admin/edit_user']:
+                        Admin::editUser();
                         break;
                     default:
                         echo APIResponse::notFoundResponse();
