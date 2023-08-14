@@ -133,12 +133,12 @@ class Users
     public static function editUserByAdmin($userId, $address, $phoneNumber, $email, $birthday, $isBlocked, $userType)
     {
         global $dbConnection;
-        if ($userId || $address || $phoneNumber || $email || $birthday) {
+        if ($userId || $address || $phoneNumber || $email || $birthday || $isBlocked || $userType) {
             $sql = "UPDATE shop.users SET ";
             if ($address) $sql = $sql . "address='$address',";
             if ($phoneNumber) $sql = $sql . "phone_number='$phoneNumber',";
             if ($email) $sql = $sql . "email='$email',";
-            if ($userType) $sql = $sql . "user_type='$userType',";
+            if ($userType != null) $sql = $sql . "user_type='$userType',";
             if ($birthday) $sql = $sql . "birthday='$birthday',";
             if ($isBlocked == 0) $sql = $sql . "is_blocked=false,";
             else $sql = $sql . "is_blocked=true,";
