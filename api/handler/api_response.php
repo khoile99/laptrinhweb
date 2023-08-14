@@ -51,8 +51,10 @@ class APIResponse
     public static function successResponse($body = null)
     {
         header('HTTP/1.1 200 OK');
-        if (!$body) $body = "success";
-        return json_encode($body);
+        $bodyTmp = $body;
+        if ($body == null) $bodyTmp = "success";
+        if ($body == []) $bodyTmp = [];
+        return json_encode($bodyTmp);
     }
 
     public static function badRequest($body = null)
