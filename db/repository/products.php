@@ -44,10 +44,10 @@ class Products
             if ($name) $sql = $sql . "name='$name',";
             if ($price) $sql = $sql . "price='$price',";
             if ($description) $sql = $sql . "description='$description',";
-            if ($brand != null) $sql = $sql . "brand='$brand',";
-            if ($color != null) $sql = $sql . "color='$color',";
-            if ( $material != null) $sql = $sql . "material='$material',";
-            if ($size != null) $sql = $sql . "size='$size',";
+            $sql = $sql . "brand='$brand',";
+            $sql = $sql . "color='$color',";
+            $sql = $sql . "material='$material',";
+            $sql = $sql . "size='$size',";
             $sql = substr($sql, 0, strlen($sql) - 1);
             if ($id) $sql = "$sql WHERE id=$id returning *";
             else return null;
