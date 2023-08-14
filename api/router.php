@@ -148,6 +148,9 @@ class Router
                     case ['POST', '/delete_order']:
                         User::deleteCart($this->userId);
                         break;
+                    case ['POST', '/update_cart']:
+                        User::updateCart($this->userId);
+                        break;
                     default:
                         echo APIResponse::notFoundResponse();
                         break;

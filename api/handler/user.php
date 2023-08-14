@@ -58,4 +58,12 @@ class User
         [$statusCode, $msg] = UserUseCase::deleteCart($userId, $id);
         echo APIResponse::processResponseCommon($statusCode, $msg);
     }
+
+    public static function updateCart($userId)
+    {
+        $id = $_POST["id"];
+        $number = $_POST["number"];
+        [$statusCode, $msg] = UserUseCase::updateCart($userId, $id, $number);
+        echo APIResponse::processResponseCommon($statusCode, $msg);
+    }
 }

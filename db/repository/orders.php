@@ -21,4 +21,12 @@ class Orders
         $dbConnection->query($dql);
         return $orderId;
     }
+
+    public static function updateNumber($userId, $id, $number)
+    {
+        global $dbConnection;
+        $dql = "UPDATE shop.orders SET number=$number WHERE user_id=$userId AND id=$id";
+        $dbConnection->query($dql);
+        return true;
+    }
 }

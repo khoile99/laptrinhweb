@@ -67,4 +67,12 @@ class User
 
         return [200, array('message' => "Deleted Successfully")];
     }
+
+    public static function updateCart($userId, $id, $number)
+    {
+        $isUpdated = Orders::updateNumber($userId, $id, $number);
+        if (!$isUpdated) return [400, array('message' => "update unsuccessfully")];
+
+        return [200, array('message' => "Updated successfully")];
+    }
 }
