@@ -10,6 +10,7 @@ require_once "db/repository/comments.php";
 use Db\repository\Information;
 use Db\repository\Users;
 use Db\repository\Comments;
+use Db\repository\Products;
 
 class Admin
 {
@@ -33,6 +34,13 @@ class Admin
         return [200, array("message" => "Deleted successfully")];
     }
 
+    public static function deleteProduct($productId)
+    {
+        $user_id = Products::deleteProduct($productId);
+        if ($user_id == null) return [400, array("message" => "Delete unsuccessfully")];
+        return [200, array("message" => "Deleted successfully")];
+    }
+
     public static function editUser($userId, $address, $phoneNumber, $email, $birthday, $isBlocked, $userType)
     {
         $user = Users::editUserByAdmin($userId, $address, $phoneNumber, $email, $birthday, $isBlocked, $userType);
@@ -50,5 +58,12 @@ class Admin
         if ($addressRes == null) return [400, array('message' => 'Update unsuccessfully')];
         $body = array('phone' => $phoneRes, 'address' => $addressRes, 'email' => $emailRes);
         return [200, $body];
+    }
+
+    public static function editProduct($id, $name, $price, $description, $brand, $color, $material, $size)
+    {
+        $product = Products::editProduct($id, $name, $price, $description, $brand, $color, $material, $size);
+        if ($product == null) return [400, array("message" => "Update unsuccessfully")];
+        return [200, $product];
     }
 }

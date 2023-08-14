@@ -38,6 +38,14 @@ class Admin
         echo APIResponse::processResponseCommon($statusCode, $body);
     }
 
+    public static function deleteProduct()
+    {
+        $uriList = explode('/', $_SERVER['REQUEST_URI']);
+        $productId = $uriList[count($uriList) - 1];
+        [$statusCode, $body] = AdminUseCase::deleteProduct($productId);
+        echo APIResponse::processResponseCommon($statusCode, $body);
+    }
+
 
     public static function listUser()
     {
@@ -77,5 +85,25 @@ class Admin
         $email = $_POST["email"];
         [$statusCode, $body] = AdminUseCase::editAddress($phone, $address, $email);
         echo APIResponse::processResponseCommon($statusCode, $body);
+    }
+
+    public static function editProduct()
+    {
+
+        $formKeys = ["id", "name", "price", "description", "brand", "color", "material", "size"];
+        $patterns = ["id" => "/\d+/", "name" => "/\S+/", "price" => "/^-?(?:\d+|\d*\.\d+)$/", "description" => "/\S+/", "brand" => "/\S+/", "color" => "/\S+/", "material" => "/\S+/", "size" => "/\S+/"];
+
+        Validate::validateBody($formKeys, $patterns);
+
+        $id = $_POST["id"];
+        $name = $_POST["name"];
+        $price = $_POST["price"];
+        $description = $_POST["description"];
+        $brand = $_POST["brand"];
+        $color = $_POST["color"];
+        $material = $_POST["material"];
+        $size = $_POST["size"];
+        [$statusCode, $message] = AdminUseCase::editProduct($id, $name, $price, $description, $brand, $color, $material, $size);
+        echo APIResponse::processResponseCommon($statusCode, $message);
     }
 }

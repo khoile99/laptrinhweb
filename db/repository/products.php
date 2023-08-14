@@ -1,7 +1,7 @@
 <?php
 
 namespace Db\repository;
-
+use Exception;
 require_once "db/db.php";
 
 class Products
@@ -24,5 +24,39 @@ class Products
         $dql = "SELECT id,name,price,description,brand,color,material,size,array_to_json(img) AS img FROM shop.products WHERE id=$id";
         $product = $dbConnection->query($dql)->fetchObject();
         return $product;
+    }
+
+    public static function deleteProduct($id)
+    {
+        global $dbConnection;
+        $dql = "DELETE FROM shop.products WHERE id=$id";
+        $records = $dbConnection->query($dql);
+        return $id;
+    }
+
+    public static function editProduct($id, $name, $price, $description, $brand, $color, $material, $size)
+    {
+        global $dbConnection;
+        if ($id || $name || $price || $description || $brand || $color || $material || $size) {
+            $sql = "UPDATE shop.products SET ";
+            if ($name) $sql = $sql . "name='$name',";
+            if ($price) $sql = $sql . "price='$price',";
+            if ($description) $sql = $sql . "description='$description',";
+            if ($brand) $sql = $sql . "brand='$brand',";
+            if ($color) $sql = $sql . "color='$color',";
+            if ($material) $sql = $sql . "material='$material',";
+            if ($size) $sql = $sql . "size='$size',";
+            $sql = substr($sql, 0, strlen($sql) - 1);
+            if ($id) $sql = "$sql WHERE id=$id returning *";
+            else return null;
+            try {
+                $result = $dbConnection->query($sql)->fetchObject();
+                if ($result) return $result;
+                return null;
+            } catch (Exception $e) {
+                return null;
+            }
+        }
+        return null;
     }
 }

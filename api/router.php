@@ -87,6 +87,11 @@ class Router
                     exit;
                 }
 
+                if ($uriList[2] == 'delete_product' && $this->requestMethod == "DELETE") {
+                    Admin::deleteProduct();
+                    exit;
+                }
+
                 switch ([$this->requestMethod, $this->uri]) {
                     case ['POST', '/admin/login']:
                         Auth::loginAdmin();
@@ -102,6 +107,9 @@ class Router
                         break;
                     case ['POST', '/admin/change_address']:
                         Admin::changeAddress();
+                        break;
+                    case ['POST', '/admin/edit_product']:
+                        Admin::editProduct();
                         break;
                     default:
                         echo APIResponse::notFoundResponse();
