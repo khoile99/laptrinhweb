@@ -22,4 +22,28 @@ class Information
 
         return $records;
     }
+
+    public static function editPhone($phone)
+    {
+        global $dbConnection;
+        $dql = "UPDATE shop.information SET value='$phone' WHERE key='phone'";
+        $dbConnection->query($dql);
+        return $phone;
+    }
+
+    public static function editaddress($address)
+    {
+        global $dbConnection;
+        $dql = "UPDATE shop.information SET value='$address' WHERE key='address'";
+        $dbConnection->query($dql);
+        return $address;
+    }
+
+    public static function editEmail($email)
+    {
+        global $dbConnection;
+        $dql = "UPDATE shop.information SET value='$email' WHERE key='email'";
+        $dbConnection->query($dql);
+        return $email;
+    }
 }

@@ -95,6 +95,9 @@ class Router
                     case ['POST', '/admin/edit_user']:
                         Admin::editUser();
                         break;
+                    case ['POST', '/admin/change_address']:
+                        Admin::changeAddress();
+                        break;
                     default:
                         echo APIResponse::notFoundResponse();
                         break;

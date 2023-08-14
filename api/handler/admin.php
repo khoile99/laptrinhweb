@@ -54,4 +54,19 @@ class Admin
         [$statusCode, $body] = AdminUseCase::editUser($userId, $address, $phoneNumber, $email, $birthday, $isBlocked, $userType);
         echo APIResponse::processResponseCommon($statusCode, $body);
     }
+
+    public static function changeAddress()
+    {
+
+        $formKeys = ["phone", "address", "email"];
+        $patterns = ["phone" => "/^\d{10}$/", "address" => "/\S+/", "email" => ""];
+
+        Validate::validateBody($formKeys, $patterns);
+
+        $phone = $_POST["phone"];
+        $address = $_POST["address"];
+        $email = $_POST["email"];
+        [$statusCode, $body] = AdminUseCase::editAddress($phone, $address, $email);
+        echo APIResponse::processResponseCommon($statusCode, $body);
+    }
 }
