@@ -31,4 +31,12 @@ class Comments
 
         return $records;
     }
+
+    public static function deleteComment($commentId)
+    {
+        global $dbConnection;
+        $dql = "DELETE FROM shop.comments WHERE id=$commentId";
+        $records = $dbConnection->query($dql);
+        return $commentId;
+    }
 }

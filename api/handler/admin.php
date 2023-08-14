@@ -30,6 +30,15 @@ class Admin
         echo APIResponse::processResponseCommon($statusCode, $body);
     }
 
+    public static function deleteComment()
+    {
+        $uriList = explode('/', $_SERVER['REQUEST_URI']);
+        $commentId = $uriList[count($uriList) - 1];
+        [$statusCode, $body] = AdminUseCase::deleteComment($commentId);
+        echo APIResponse::processResponseCommon($statusCode, $body);
+    }
+
+
     public static function listUser()
     {
         [$statusCode, $body] = AdminUseCase::listUser();

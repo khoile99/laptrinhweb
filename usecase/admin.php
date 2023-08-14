@@ -5,9 +5,11 @@ namespace UseCase;
 require_once "pkg/hash.php";
 require_once "pkg/jwt.php";
 require_once "db/repository/users.php";
+require_once "db/repository/comments.php";
 
 use Db\repository\Information;
 use Db\repository\Users;
+use Db\repository\Comments;
 
 class Admin
 {
@@ -20,6 +22,13 @@ class Admin
     public static function deleteUser($id)
     {
         $user_id = Users::deleteUser($id);
+        if ($user_id == null) return [400, array("message" => "Delete unsuccessfully")];
+        return [200, array("message" => "Deleted successfully")];
+    }
+
+    public static function deleteComment($commentId)
+    {
+        $user_id = Comments::deleteComment($commentId);
         if ($user_id == null) return [400, array("message" => "Delete unsuccessfully")];
         return [200, array("message" => "Deleted successfully")];
     }

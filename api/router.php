@@ -82,6 +82,11 @@ class Router
                     exit;
                 }
 
+                if ($uriList[2] == 'delete_comment' && $this->requestMethod == "DELETE") {
+                    Admin::deleteComment();
+                    exit;
+                }
+
                 switch ([$this->requestMethod, $this->uri]) {
                     case ['POST', '/admin/login']:
                         Auth::loginAdmin();
