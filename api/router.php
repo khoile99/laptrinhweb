@@ -111,6 +111,9 @@ class Router
                     case ['POST', '/admin/edit_product']:
                         Admin::editProduct();
                         break;
+                    case ['GET', '/admin/get_admin']:
+                        Admin::getAdmin($this->adminId);
+                        break;
                     default:
                         echo APIResponse::notFoundResponse();
                         break;

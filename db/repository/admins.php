@@ -19,4 +19,15 @@ class Admins
 
         return $record;
     }
+
+    public static function getAdmin($id)
+    {
+        global $dbConnection;
+        $dql = "SELECT id,user_name,email FROM shop.admins WHERE id=$id";
+        $record = $dbConnection->query($dql)->fetchObject();
+        if (!$record) {
+            return null;
+        }
+        return $record;
+    }
 }

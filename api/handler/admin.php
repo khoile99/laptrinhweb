@@ -106,4 +106,10 @@ class Admin
         [$statusCode, $message] = AdminUseCase::editProduct($id, $name, $price, $description, $brand, $color, $material, $size);
         echo APIResponse::processResponseCommon($statusCode, $message);
     }
+
+    public static function getAdmin($adminId)
+    {
+        [$statusCode, $message] = AdminUseCase::getAdmin($adminId);
+        echo APIResponse::processResponseCommon($statusCode, $message);
+    }
 }

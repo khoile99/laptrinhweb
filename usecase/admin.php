@@ -6,11 +6,13 @@ require_once "pkg/hash.php";
 require_once "pkg/jwt.php";
 require_once "db/repository/users.php";
 require_once "db/repository/comments.php";
+require_once "db/repository/admins.php";
 
 use Db\repository\Information;
 use Db\repository\Users;
 use Db\repository\Comments;
 use Db\repository\Products;
+use Db\repository\Admins;
 
 class Admin
 {
@@ -65,5 +67,12 @@ class Admin
         $product = Products::editProduct($id, $name, $price, $description, $brand, $color, $material, $size);
         if ($product == null) return [400, array("message" => "Update unsuccessfully")];
         return [200, $product];
+    }
+
+    public static function getAdmin($adminId)
+    {
+        $admin = Admins::getAdmin($adminId);
+        if ($admin == null) return [400, array("message" => "Not found admin")];
+        return [200, $admin];
     }
 }
