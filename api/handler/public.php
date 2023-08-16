@@ -25,6 +25,14 @@ class Common
         echo APIResponse::processResponseCommon($code, $product);
     }
 
+    public static function searchProduct()
+    {
+        $uriList = explode('/', $_SERVER['REQUEST_URI']);
+        $keyword = $uriList[count($uriList) - 1];
+        [$code, $products] = CommonUseCase::searchProduct($keyword);
+        echo APIResponse::processResponseCommon($code, $products);
+    }
+
     public static function get_comment()
     {
         $uriList = explode('/', $_SERVER['REQUEST_URI']);

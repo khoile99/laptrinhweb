@@ -37,6 +37,10 @@ class Router
                 Common::get_product();
                 return;
             }
+            if ($uriList[2] == 'search_product' && $this->requestMethod == "GET") {
+                Common::searchProduct();
+                return;
+            }
             if ($uriList[2] == 'get_comment' && $this->requestMethod == "GET") {
                 Common::get_comment();
                 return;

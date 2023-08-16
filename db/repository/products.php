@@ -20,6 +20,18 @@ class Products
         return $records;
     }
 
+    public static function searchProduct($keyword)
+    {
+        global $dbConnection;
+        $dql = "SELECT id, name,price, description, brand, color, material, size,array_to_json(img) as img FROM shop.products WHERE name LIKE '%$keyword%'  ORDER BY name ASC";
+        $records = $dbConnection->query($dql)->fetchAll(\PDO::FETCH_OBJ);
+        if (!$records) {
+            return null;
+        }
+
+        return $records;
+    }
+
     public static function get_product($id)
     {
         global $dbConnection;
