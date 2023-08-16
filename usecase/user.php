@@ -75,4 +75,12 @@ class User
 
         return [200, array('message' => "Updated successfully")];
     }
+
+    public static function addCart($userId, $id, $number)
+    {
+        $isUpdated = Orders::addCart($userId, $id, $number);
+        if (!$isUpdated) return [400, array('message' => "Added unsuccessfully")];
+
+        return [200, array('message' => "Added successfully")];
+    }
 }

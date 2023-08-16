@@ -154,6 +154,9 @@ class Router
                     case ['POST', '/update_cart']:
                         User::updateCart($this->userId);
                         break;
+                    case ['POST', '/add_cart']:
+                        User::addCart($this->userId);
+                        break;
                     default:
                         echo APIResponse::notFoundResponse();
                         break;

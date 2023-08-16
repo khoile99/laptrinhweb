@@ -29,4 +29,12 @@ class Orders
         $dbConnection->query($dql);
         return true;
     }
+
+    public static function addCart($userId, $id, $number)
+    {
+        global $dbConnection;
+        $dql = "INSERT INTO shop.orders (user_id, product_id,number) VALUES($userId,$id,$number)";
+        $dbConnection->query($dql);
+        return true;
+    }
 }

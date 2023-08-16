@@ -66,4 +66,12 @@ class User
         [$statusCode, $msg] = UserUseCase::updateCart($userId, $id, $number);
         echo APIResponse::processResponseCommon($statusCode, $msg);
     }
+
+    public static function addCart($userId)
+    {
+        $id = $_POST["id"];
+        $number = $_POST["number"];
+        [$statusCode, $msg] = UserUseCase::addCart($userId, $id, $number);
+        echo APIResponse::processResponseCommon($statusCode, $msg);
+    }
 }
